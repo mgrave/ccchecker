@@ -21,8 +21,9 @@ const setYear = () =>
 btnChecar.addEventListener("click", async () => {
   const tarjetas = textarea.value.split("\n").map((card) => card.split("|"));
   //Hacemos la solicitud
+if (tarjetas && tarjetas.length > 0) {
   try {
-    if (tarjetas && tarjetas.length > 0) {
+    
       const respuesta = await fetch("https://freeapi.stery.us/api/checarCC", {
         method: "POST",
         headers: {
@@ -30,9 +31,7 @@ btnChecar.addEventListener("click", async () => {
         },
         body: JSON.stringify(tarjetas),
       });
-    }else{
-      alert("No se consulto nada, se envio vacio?");
-    }
+   
     const datos = await respuesta.json();
     //Limpiamos el textarea y el DIV
     datosDiv.innerHTML = "";
@@ -66,4 +65,8 @@ btnChecar.addEventListener("click", async () => {
     infos.textContent = `ERROR: ${error.message}`;
     hayProblemas = false;
   }
+}else{
+      alert("No se consulto nada, se envio vacio?");
+}
+    
 });
