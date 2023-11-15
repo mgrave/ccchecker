@@ -22,13 +22,17 @@ btnChecar.addEventListener("click", async () => {
   const tarjetas = textarea.value.split("\n").map((card) => card.split("|"));
   //Hacemos la solicitud
   try {
-    const respuesta = await fetch("https://freeapi.stery.us/api/checarCC", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(tarjetas),
-    });
+    if (tarjetas && tarjetas.length > 0) {
+      const respuesta = await fetch("https://freeapi.stery.us/api/checarCC", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(tarjetas),
+      });
+    }else{
+      alert("No se consulto nada, se envio vacio?");
+    }
     const datos = await respuesta.json();
     //Limpiamos el textarea y el DIV
     datosDiv.innerHTML = "";
